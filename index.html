@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SportTips AI – Download</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 24px;
+    }
+    .logo { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .sub  { color: #888; font-size: 0.95rem; margin-bottom: 32px; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid #333;
+      border-top-color: #4ade80;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .redirect-msg { color: #888; font-size: 0.85rem; }
+    .fallback { display: none; margin-top: 32px; }
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 8px;
+    }
+    .btn-ios     { background: #007aff; color: #fff; }
+    .btn-android { background: #3ddc84; color: #000; }
+    .btn-web     { background: #333;    color: #fff; }
+  </style>
+</head>
+<body>
+
+  <div class="logo">⚽ SportTips AI</div>
+  <div class="sub">AI-powered football predictions</div>
+
+  <div class="spinner" id="spinner"></div>
+  <div class="redirect-msg" id="msg">Detecting your device…</div>
+
+  <!-- shown only if JS redirect somehow fails -->
+  <div class="fallback" id="fallback">
+    <p style="color:#888;margin-bottom:16px">Choose your platform:</p>
+    <a class="btn btn-ios"     href="https://apps.apple.com/gr/app/sporttips-ai/id6763242331">Download on App Store</a>
+    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.sporttipsai.app">Get it on Google Play</a>
+    <a class="btn btn-web"     href="https://sites.google.com/view/sporttips-ai/">Open Website</a>
+  </div>
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────────
+    var IOS_URL     = "https://apps.apple.com/gr/app/sporttips-ai/id6763242331";      // e.g. https://apps.apple.com/app/idXXXXXXXXX
+    var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.sporttipsai.app";    // e.g. https://play.google.com/store/apps/details?id=com.yourapp
+    var WEB_URL     = "https://sites.google.com/view/sporttips-ai/";
+    var DELAY_MS    = 300; // ms before redirect (feels snappy, not jarring)
+    // ────────────────────────────────────────────────────────────
+
+    function detect() {
+      var ua = navigator.userAgent || "";
+      if (/iPhone|iPad|iPod/i.test(ua))         return "ios";
+      if (/Android/i.test(ua))                   return "android";
+      return "web";
+    }
+
+    function redirect() {
+      var platform = detect();
+      var targets  = { ios: IOS_URL, android: ANDROID_URL, web: WEB_URL };
+      var url      = targets[platform];
+
+      var labels   = { ios: "App Store", android: "Google Play", web: "website" };
+      document.getElementById("msg").textContent =
+        "Redirecting you to " + labels[platform] + "…";
+
+      if (!url || url.indexOf("URL_HERE") !== -1) {
+        // placeholder not filled in — show fallback buttons instead
+        document.getElementById("spinner").style.display  = "none";
+        document.getElementById("fallback").style.display = "block";
+        return;
+      }
+
+      setTimeout(function() { window.location.replace(url); }, DELAY_MS);
+
+      // Safety: if replace() is blocked, show fallback after 2s
+      setTimeout(function() {
+        document.getElementById("fallback").style.display = "block";
+      }, 2000);
+    }
+
+    redirect();
+  </script>
+
+</body>
+</html>
