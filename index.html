@@ -27,39 +27,40 @@
       padding: 24px;
     }
     .logo { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-    .sub  { color: #888; font-size: 0.95rem; margin-bottom: 32px; }
-    .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid #333;
-      border-top-color: #4ade80;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 24px;
+    .sub  { color: #888; font-size: 0.95rem; margin-bottom: 40px; }
+
+    /* The single matching-platform button shown as fallback */
+    #smart-btn {
+      display: none;
+      width: 100%;
+      max-width: 300px;
+      padding: 16px 28px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      margin: 0 auto 12px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .redirect-msg { color: #888; font-size: 0.85rem; }
-    .fallback { display: none; margin-top: 32px; }
-    .fallback.visible { display: block; }
-    .fallback-hint {
-      color: #888;
-      font-size: 0.85rem;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
+    #smart-btn.ios     { background: #007aff; color: #fff; }
+    #smart-btn.android { background: #3ddc84; color: #000; }
+
+    /* Secondary buttons shown after smart-btn */
+    .other-btns { display: none; margin-top: 8px; }
     .btn {
       display: block;
       width: 100%;
-      max-width: 280px;
-      padding: 14px 28px;
+      max-width: 300px;
+      padding: 13px 28px;
       border-radius: 12px;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-decoration: none;
-      margin: 8px auto;
+      margin: 6px auto;
+      background: #222;
+      color: #aaa;
     }
-    .btn-ios     { background: #007aff; color: #fff; }
-    .btn-android { background: #3ddc84; color: #000; }
-    .btn-web     { background: #333;    color: #fff; }
+
+    #status { color: #555; font-size: 0.82rem; margin-top: 16px; }
   </style>
 </head>
 <body>
@@ -67,68 +68,89 @@
   <div class="logo">⚽ SportTips AI</div>
   <div class="sub">AI-powered football predictions</div>
 
-  <div class="spinner" id="spinner"></div>
-  <div class="redirect-msg" id="msg">Detecting your device…</div>
+  <a id="smart-btn" href="#">Tap to download</a>
 
-  <div class="fallback" id="fallback">
-    <p class="fallback-hint" id="fallback-hint">Choose your platform:</p>
-    <a class="btn btn-ios"     href="https://apps.apple.com/gr/app/sporttips-ai/id6763242331"
-       onclick="gtag('event','download_tap',{event_category:'platform',event_label:'ios'})">Download on App Store</a>
-    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.sporttipsai.app"
-       onclick="gtag('event','download_tap',{event_category:'platform',event_label:'android'})">Get it on Google Play</a>
-    <a class="btn btn-web"     href="https://sites.google.com/view/sporttips-ai/"
-       onclick="gtag('event','download_tap',{event_category:'platform',event_label:'web'})">Open Website</a>
+  <div class="other-btns" id="other-btns">
+    <a class="btn" id="alt-btn" href="#">Other platform</a>
+    <a class="btn" href="https://sites.google.com/view/sporttips-ai/">Open Website</a>
   </div>
+
+  <div id="status">Detecting your device…</div>
 
   <script>
     var IOS_URL     = "https://apps.apple.com/gr/app/sporttips-ai/id6763242331";
     var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.sporttipsai.app";
     var WEB_URL     = "https://sites.google.com/view/sporttips-ai/";
 
-    function detect() {
-      var ua = navigator.userAgent || "";
-      if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
-      if (/Android/i.test(ua))          return "android";
-      return "web";
+    var ua       = navigator.userAgent || "";
+    var isIOS    = /iPhone|iPad|iPod/i.test(ua);
+    var isAndroid = /Android/i.test(ua);
+    var platform = isIOS ? "ios" : isAndroid ? "android" : "web";
+    var target   = isIOS ? IOS_URL : isAndroid ? ANDROID_URL : WEB_URL;
+
+    var smartBtn  = document.getElementById("smart-btn");
+    var otherBtns = document.getElementById("other-btns");
+    var altBtn    = document.getElementById("alt-btn");
+    var status    = document.getElementById("status");
+
+    // Wire up the fallback button immediately so it's ready
+    if (isIOS) {
+      smartBtn.textContent = "Download on App Store";
+      smartBtn.href = IOS_URL;
+      smartBtn.className = "ios";
+      altBtn.textContent = "Get it on Google Play";
+      altBtn.href = ANDROID_URL;
+    } else if (isAndroid) {
+      smartBtn.textContent = "Get it on Google Play";
+      smartBtn.href = ANDROID_URL;
+      smartBtn.className = "android";
+      altBtn.textContent = "Download on App Store";
+      altBtn.href = IOS_URL;
+    } else {
+      // Desktop — show all options immediately
+      smartBtn.textContent = "Download on App Store";
+      smartBtn.href = IOS_URL;
+      smartBtn.className = "ios";
+      altBtn.textContent = "Get it on Google Play";
+      altBtn.href = ANDROID_URL;
+      showFallback("Choose your platform:");
     }
 
-    // Social media in-app browsers block JS redirects — detect them up front
-    function isInAppBrowser() {
-      var ua = navigator.userAgent || "";
-      return /Instagram|FBAN|FBAV|BytedanceWebview|musical_ly|TikTok|Twitter|Snapchat/i.test(ua);
+    function showFallback(msg) {
+      smartBtn.style.display = "block";
+      otherBtns.style.display = "block";
+      status.textContent = msg || "";
+      gtag('event', 'fallback_shown', { event_category: 'platform', event_label: platform });
     }
 
-    function showButtons(hint) {
-      document.getElementById("spinner").style.display  = "none";
-      document.getElementById("msg").style.display      = "none";
-      if (hint) document.getElementById("fallback-hint").textContent = hint;
-      document.getElementById("fallback").classList.add("visible");
-    }
+    // ── Attempt redirect via three methods ──────────────────────────
+    // 1. Synchronous anchor click (highest chance of being treated as user gesture)
+    var a = document.createElement('a');
+    a.href = target;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
 
-    function redirect() {
-      // In-app browsers (Instagram, Facebook, TikTok…) block window.location.replace().
-      // Skip the redirect entirely and go straight to the tap-to-download buttons.
-      if (isInAppBrowser()) {
-        gtag('event', 'inapp_browser', { event_category: 'platform', event_label: detect() });
-        showButtons("Tap below to download:");
-        return;
-      }
+    // 2. location.href assignment
+    window.location.href = target;
 
-      var platform = detect();
-      var targets  = { ios: IOS_URL, android: ANDROID_URL, web: WEB_URL };
-      var labels   = { ios: "App Store", android: "Google Play", web: "website" };
-      var url      = targets[platform];
+    // 3. location.replace (original method)
+    window.location.replace(target);
 
-      document.getElementById("msg").textContent = "Redirecting you to " + labels[platform] + "…";
-
+    // If we are still here after 600 ms the browser blocked all three →
+    // show the fallback button immediately (no spinner)
+    var fallbackTimer = setTimeout(function () {
       gtag('event', 'redirect', { event_category: 'platform', event_label: platform });
-      setTimeout(function() { window.location.replace(url); }, 300);
+      var label = isIOS ? "App Store" : isAndroid ? "Google Play" : "";
+      showFallback(label ? "Tap below to open " + label + ":" : "Choose your platform:");
+    }, 600);
 
-      // Safety net: if replace() is somehow blocked, show buttons after 2s
-      setTimeout(function() { showButtons("Choose your platform:"); }, 2000);
-    }
-
-    redirect();
+    // If the page is navigating away the unload fires — cancel the timer so we
+    // don't thrash the DOM on a page that's already leaving.
+    window.addEventListener('beforeunload', function () {
+      clearTimeout(fallbackTimer);
+      gtag('event', 'redirect_success', { event_category: 'platform', event_label: platform });
+    });
   </script>
 
 </body>
