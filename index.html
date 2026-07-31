@@ -39,14 +39,23 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .redirect-msg { color: #888; font-size: 0.85rem; }
     .fallback { display: none; margin-top: 32px; }
+    .fallback.visible { display: block; }
+    .fallback-hint {
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
     .btn {
-      display: inline-block;
+      display: block;
+      width: 100%;
+      max-width: 280px;
       padding: 14px 28px;
       border-radius: 12px;
       font-weight: 600;
       font-size: 1rem;
       text-decoration: none;
-      margin: 8px;
+      margin: 8px auto;
     }
     .btn-ios     { background: #007aff; color: #fff; }
     .btn-android { background: #3ddc84; color: #000; }
@@ -61,52 +70,62 @@
   <div class="spinner" id="spinner"></div>
   <div class="redirect-msg" id="msg">Detecting your device…</div>
 
-  <!-- shown only if JS redirect somehow fails -->
   <div class="fallback" id="fallback">
-    <p style="color:#888;margin-bottom:16px">Choose your platform:</p>
-    <a class="btn btn-ios"     href="https://apps.apple.com/gr/app/sporttips-ai/id6763242331">Download on App Store</a>
-    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.sporttipsai.app">Get it on Google Play</a>
-    <a class="btn btn-web"     href="https://sites.google.com/view/sporttips-ai/">Open Website</a>
+    <p class="fallback-hint" id="fallback-hint">Choose your platform:</p>
+    <a class="btn btn-ios"     href="https://apps.apple.com/gr/app/sporttips-ai/id6763242331"
+       onclick="gtag('event','download_tap',{event_category:'platform',event_label:'ios'})">Download on App Store</a>
+    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.sporttipsai.app"
+       onclick="gtag('event','download_tap',{event_category:'platform',event_label:'android'})">Get it on Google Play</a>
+    <a class="btn btn-web"     href="https://sites.google.com/view/sporttips-ai/"
+       onclick="gtag('event','download_tap',{event_category:'platform',event_label:'web'})">Open Website</a>
   </div>
 
   <script>
-    // ── CONFIG ──────────────────────────────────────────────────
-    var IOS_URL     = "https://apps.apple.com/gr/app/sporttips-ai/id6763242331";      // e.g. https://apps.apple.com/app/idXXXXXXXXX
-    var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.sporttipsai.app";    // e.g. https://play.google.com/store/apps/details?id=com.yourapp
+    var IOS_URL     = "https://apps.apple.com/gr/app/sporttips-ai/id6763242331";
+    var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.sporttipsai.app";
     var WEB_URL     = "https://sites.google.com/view/sporttips-ai/";
-    var DELAY_MS    = 300; // ms before redirect (feels snappy, not jarring)
-    // ────────────────────────────────────────────────────────────
 
     function detect() {
       var ua = navigator.userAgent || "";
-      if (/iPhone|iPad|iPod/i.test(ua))         return "ios";
-      if (/Android/i.test(ua))                   return "android";
+      if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+      if (/Android/i.test(ua))          return "android";
       return "web";
     }
 
+    // Social media in-app browsers block JS redirects — detect them up front
+    function isInAppBrowser() {
+      var ua = navigator.userAgent || "";
+      return /Instagram|FBAN|FBAV|BytedanceWebview|musical_ly|TikTok|Twitter|Snapchat/i.test(ua);
+    }
+
+    function showButtons(hint) {
+      document.getElementById("spinner").style.display  = "none";
+      document.getElementById("msg").style.display      = "none";
+      if (hint) document.getElementById("fallback-hint").textContent = hint;
+      document.getElementById("fallback").classList.add("visible");
+    }
+
     function redirect() {
-      var platform = detect();
-      var targets  = { ios: IOS_URL, android: ANDROID_URL, web: WEB_URL };
-      var url      = targets[platform];
-
-      var labels   = { ios: "App Store", android: "Google Play", web: "website" };
-      document.getElementById("msg").textContent =
-        "Redirecting you to " + labels[platform] + "…";
-
-      if (!url || url.indexOf("URL_HERE") !== -1) {
-        // placeholder not filled in — show fallback buttons instead
-        document.getElementById("spinner").style.display  = "none";
-        document.getElementById("fallback").style.display = "block";
+      // In-app browsers (Instagram, Facebook, TikTok…) block window.location.replace().
+      // Skip the redirect entirely and go straight to the tap-to-download buttons.
+      if (isInAppBrowser()) {
+        gtag('event', 'inapp_browser', { event_category: 'platform', event_label: detect() });
+        showButtons("Tap below to download:");
         return;
       }
 
-      gtag('event', 'redirect', { event_category: 'platform', event_label: platform });
-      setTimeout(function() { window.location.replace(url); }, DELAY_MS);
+      var platform = detect();
+      var targets  = { ios: IOS_URL, android: ANDROID_URL, web: WEB_URL };
+      var labels   = { ios: "App Store", android: "Google Play", web: "website" };
+      var url      = targets[platform];
 
-      // Safety: if replace() is blocked, show fallback after 2s
-      setTimeout(function() {
-        document.getElementById("fallback").style.display = "block";
-      }, 2000);
+      document.getElementById("msg").textContent = "Redirecting you to " + labels[platform] + "…";
+
+      gtag('event', 'redirect', { event_category: 'platform', event_label: platform });
+      setTimeout(function() { window.location.replace(url); }, 300);
+
+      // Safety net: if replace() is somehow blocked, show buttons after 2s
+      setTimeout(function() { showButtons("Choose your platform:"); }, 2000);
     }
 
     redirect();
