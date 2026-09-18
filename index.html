@@ -1,157 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SportTips AI – Download</title>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HG6B5C7GJS"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HG6B5C7GJS');
-  </script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0d0d0d;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 24px;
-    }
-    .logo { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-    .sub  { color: #888; font-size: 0.95rem; margin-bottom: 40px; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Petran SW — AI-Powered Mobile Apps</title>
+<meta name="description" content="Petran SW builds AI-powered mobile apps. Download SportTips AI, CricAI, and Eras Daily on iOS and Android.">
+<link rel="canonical" href="https://petransw.com/">
+<meta property="og:title" content="Petran SW — AI-Powered Mobile Apps">
+<meta property="og:description" content="Football predictions, cricket analytics, and more. Available on iOS &amp; Android.">
+<meta property="og:url" content="https://petransw.com/">
+<meta property="og:type" content="website">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 
-    /* The single matching-platform button shown as fallback */
-    #smart-btn {
-      display: none;
-      width: 100%;
-      max-width: 300px;
-      padding: 16px 28px;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-decoration: none;
-      margin: 0 auto 12px;
-    }
-    #smart-btn.ios     { background: #007aff; color: #fff; }
-    #smart-btn.android { background: #3ddc84; color: #000; }
+:root{
+  --text:#0E1523;
+  --ground:#F4F6FB;
+  --surface:#FFFFFF;
+  --border:#E2E8F0;
+  --teal:#00C5A0;
+  --teal-hover:#009E82;
+  --slate:#6B7894;
+  --slate-dim:#B0BACC;
+  --badge-bg:#E8F8F4;
+  --badge-color:#009E82;
+  --shadow:0 1px 3px rgba(14,21,35,.07),0 5px 14px rgba(14,21,35,.06);
+  --mono:'SF Mono','Consolas','Courier New',monospace;
+  --r:14px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --text:#DDE4F0;--ground:#0F1420;--surface:#18202E;
+  --border:#263044;--slate:#8A95AD;--slate-dim:#3A4458;
+  --badge-bg:#0D2B24;--badge-color:#00C5A0;
+  --shadow:0 1px 3px rgba(0,0,0,.3),0 5px 14px rgba(0,0,0,.25);
+}}
+:root[data-theme="dark"]{
+  --text:#DDE4F0;--ground:#0F1420;--surface:#18202E;
+  --border:#263044;--slate:#8A95AD;--slate-dim:#3A4458;
+  --badge-bg:#0D2B24;--badge-color:#00C5A0;
+  --shadow:0 1px 3px rgba(0,0,0,.3),0 5px 14px rgba(0,0,0,.25);
+}
+:root[data-theme="light"]{
+  --text:#0E1523;--ground:#F4F6FB;--surface:#FFFFFF;
+  --border:#E2E8F0;--slate:#6B7894;--slate-dim:#B0BACC;
+  --badge-bg:#E8F8F4;--badge-color:#009E82;
+  --shadow:0 1px 3px rgba(14,21,35,.07),0 5px 14px rgba(14,21,35,.06);
+}
 
-    /* Secondary buttons shown after smart-btn */
-    .other-btns { display: none; margin-top: 8px; }
-    .btn {
-      display: block;
-      width: 100%;
-      max-width: 300px;
-      padding: 13px 28px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      margin: 6px auto;
-      background: #222;
-      color: #aaa;
-    }
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,Roboto,sans-serif;
+  background:var(--ground);color:var(--text);
+  line-height:1.6;min-height:100vh;display:flex;flex-direction:column;
+}
 
-    #status { color: #555; font-size: 0.82rem; margin-top: 16px; }
-  </style>
+.site-header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:50;
+  padding:0 24px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{font-size:17px;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.logo .sw{color:var(--teal)}
+nav{display:flex;gap:20px;align-items:center}
+nav a{font-size:14px;font-weight:500;color:var(--slate);text-decoration:none;transition:color .15s}
+nav a:hover{color:var(--teal)}
+
+main{flex:1}
+
+.hero{padding:80px 24px 56px;max-width:860px;margin:0 auto}
+
+.eyebrow{
+  font-family:var(--mono);font-size:12.5px;color:var(--teal);
+  font-weight:500;letter-spacing:.04em;margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.eyebrow::before{
+  content:'';display:inline-block;width:7px;height:7px;
+  border-radius:50%;background:var(--teal);
+  animation:blink 2.4s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.6)}}
+@media(prefers-reduced-motion:reduce){.eyebrow::before{animation:none}}
+
+.hero h1{
+  font-size:clamp(34px,5.5vw,56px);font-weight:800;
+  line-height:1.07;letter-spacing:-.04em;
+  text-wrap:balance;margin-bottom:20px;
+}
+
+.hero p{
+  font-size:18px;color:var(--slate);
+  max-width:500px;line-height:1.65;
+}
+
+.section-inner{padding:0 24px 80px;max-width:860px;margin:0 auto}
+
+.section-label{
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--slate-dim);margin-bottom:16px;
+}
+
+.apps-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+}
+.app-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:22px;
+  display:flex;align-items:flex-start;gap:16px;
+  text-decoration:none;color:var(--text);
+  box-shadow:var(--shadow);
+  transition:transform .15s,box-shadow .15s,border-color .15s;
+}
+.app-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 24px rgba(0,197,160,.14);
+  border-color:var(--teal);
+}
+
+.card-icon{font-size:36px;line-height:1;flex-shrink:0;margin-top:2px}
+.card-body{flex:1;min-width:0}
+.card-name{font-size:16px;font-weight:700;margin-bottom:5px}
+.card-desc{font-size:13.5px;color:var(--slate);line-height:1.5;margin-bottom:12px}
+.card-links{display:flex;gap:6px;flex-wrap:wrap}
+
+.badge{
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  padding:3px 9px;border-radius:20px;
+  background:var(--badge-bg);color:var(--badge-color);letter-spacing:.02em;
+}
+
+/* Per-app accent on hover */
+.app-card[data-app="sporttips"]:hover{border-color:#4ADE80;box-shadow:0 4px 24px rgba(74,222,128,.12)}
+.app-card[data-app="cricai"]:hover{border-color:#38BDF8;box-shadow:0 4px 24px rgba(56,189,248,.12)}
+.app-card[data-app="erasdaily"]:hover{border-color:#F472B6;box-shadow:0 4px 24px rgba(244,114,182,.12)}
+
+.card-arrow{
+  font-size:20px;color:var(--slate-dim);flex-shrink:0;
+  align-self:center;transition:transform .15s,color .15s;
+  font-weight:300;line-height:1;
+}
+.app-card:hover .card-arrow{transform:translateX(3px);color:var(--teal)}
+.app-card[data-app="sporttips"]:hover .card-arrow{color:#4ADE80}
+.app-card[data-app="cricai"]:hover .card-arrow{color:#38BDF8}
+.app-card[data-app="erasdaily"]:hover .card-arrow{color:#F472B6}
+
+.site-footer{border-top:1px solid var(--border);padding:24px;font-size:13px}
+.footer-inner{
+  max-width:860px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+}
+.footer-brand{color:var(--slate);display:flex;align-items:center;gap:10px}
+.footer-brand strong{font-weight:700;color:var(--text)}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a{color:var(--slate);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:var(--teal)}
+</style>
 </head>
 <body>
 
-  <div class="logo">⚽ SportTips AI</div>
-  <div class="sub">AI-powered football predictions</div>
+<header class="site-header">
+  <a href="/" class="logo">petran<span class="sw">SW</span></a>
+  <nav>
+    <a href="/sporttips/">SportTips AI</a>
+    <a href="/cricai/">CricAI</a>
+    <a href="/erasdaily/">Eras Daily</a>
+  </nav>
+</header>
 
-  <a id="smart-btn" href="#">Tap to download</a>
+<main>
+  <section class="hero">
+    <p class="eyebrow">petran_sw.init()</p>
+    <h1>AI-powered apps<br>for everyone.</h1>
+    <p>Football predictions, cricket analytics, and daily eras content — built for people who are passionate about what they love.</p>
+  </section>
 
-  <div class="other-btns" id="other-btns">
-    <a class="btn" id="alt-btn" href="#">Other platform</a>
-    <a class="btn" href="https://sites.google.com/view/sporttips-ai/">Open Website</a>
+  <div class="section-inner">
+    <p class="section-label">// Apps</p>
+    <div class="apps-grid">
+
+      <a href="/sporttips/" class="app-card" data-app="sporttips">
+        <div class="card-icon">⚽</div>
+        <div class="card-body">
+          <div class="card-name">SportTips AI</div>
+          <div class="card-desc">Football predictions, live odds &amp; daily tips across Champions League, Premier League, La Liga and 40+ leagues.</div>
+          <div class="card-links">
+            <span class="badge">iOS</span>
+            <span class="badge">Android</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a href="/cricai/" class="app-card" data-app="cricai">
+        <div class="card-icon">🏏</div>
+        <div class="card-body">
+          <div class="card-name">CricAI</div>
+          <div class="card-desc">AI-powered cricket match predictions and live updates for IPL, T20 World Cup and international fixtures.</div>
+          <div class="card-links">
+            <span class="badge">iOS</span>
+            <span class="badge">Android</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a href="/erasdaily/" class="app-card" data-app="erasdaily">
+        <div class="card-icon">✨</div>
+        <div class="card-body">
+          <div class="card-name">Eras Daily</div>
+          <div class="card-desc">Your daily companion through every era — setlists, collectible moments, and everything a Swiftie needs.</div>
+          <div class="card-links">
+            <span class="badge">iOS</span>
+            <span class="badge">Android</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+    </div>
   </div>
+</main>
 
-  <div id="status">Detecting your device…</div>
-
-  <script>
-    var IOS_URL     = "https://apps.apple.com/gr/app/sporttips-ai/id6763242331";
-    var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.sporttipsai.app";
-    var WEB_URL     = "https://sites.google.com/view/sporttips-ai/";
-
-    var ua       = navigator.userAgent || "";
-    var isIOS    = /iPhone|iPad|iPod/i.test(ua);
-    var isAndroid = /Android/i.test(ua);
-    var platform = isIOS ? "ios" : isAndroid ? "android" : "web";
-    var target   = isIOS ? IOS_URL : isAndroid ? ANDROID_URL : WEB_URL;
-
-    var smartBtn  = document.getElementById("smart-btn");
-    var otherBtns = document.getElementById("other-btns");
-    var altBtn    = document.getElementById("alt-btn");
-    var status    = document.getElementById("status");
-
-    // Wire up the fallback button immediately so it's ready
-    if (isIOS) {
-      smartBtn.textContent = "Download on App Store";
-      smartBtn.href = IOS_URL;
-      smartBtn.className = "ios";
-      altBtn.textContent = "Get it on Google Play";
-      altBtn.href = ANDROID_URL;
-    } else if (isAndroid) {
-      smartBtn.textContent = "Get it on Google Play";
-      smartBtn.href = ANDROID_URL;
-      smartBtn.className = "android";
-      altBtn.textContent = "Download on App Store";
-      altBtn.href = IOS_URL;
-    } else {
-      // Desktop — show all options immediately
-      smartBtn.textContent = "Download on App Store";
-      smartBtn.href = IOS_URL;
-      smartBtn.className = "ios";
-      altBtn.textContent = "Get it on Google Play";
-      altBtn.href = ANDROID_URL;
-      showFallback("Choose your platform:");
-    }
-
-    function showFallback(msg) {
-      smartBtn.style.display = "block";
-      otherBtns.style.display = "block";
-      status.textContent = msg || "";
-      gtag('event', 'fallback_shown', { event_category: 'platform', event_label: platform });
-    }
-
-    // ── Attempt redirect via three methods ──────────────────────────
-    // 1. Synchronous anchor click (highest chance of being treated as user gesture)
-    var a = document.createElement('a');
-    a.href = target;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-
-    // 2. location.href assignment
-    window.location.href = target;
-
-    // 3. location.replace (original method)
-    window.location.replace(target);
-
-    // If we are still here after 600 ms the browser blocked all three →
-    // show the fallback button immediately (no spinner)
-    var fallbackTimer = setTimeout(function () {
-      gtag('event', 'redirect', { event_category: 'platform', event_label: platform });
-      var label = isIOS ? "App Store" : isAndroid ? "Google Play" : "";
-      showFallback(label ? "Tap below to open " + label + ":" : "Choose your platform:");
-    }, 600);
-
-    // If the page is navigating away the unload fires — cancel the timer so we
-    // don't thrash the DOM on a page that's already leaving.
-    window.addEventListener('beforeunload', function () {
-      clearTimeout(fallbackTimer);
-      gtag('event', 'redirect_success', { event_category: 'platform', event_label: platform });
-    });
-  </script>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <strong>Petran SW</strong>
+      <span>© 2026. All rights reserved.</span>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy/sporttips/">Privacy · SportTips AI</a>
+      <a href="/privacy/cricai/">Privacy · CricAI</a>
+      <a href="mailto:apetros0303@gmail.com">Contact</a>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
