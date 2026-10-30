@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete Account — SupportBuddy</title>
+<meta name="description" content="Request deletion of your SupportBuddy account and all associated personal data.">
+<link rel="canonical" href="https://petransw.com/delete-account/supportbuddy/">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+
+:root{
+  --text:#2E3A59;--ground:#E8F4FD;--surface:#FFFFFF;
+  --border:#D0E4F5;--accent:#7BAFD4;--accent-dark:#5A92B8;
+  --accent-light:#EEF6FC;
+  --slate:#6B7894;--slate-dim:#B0BACC;
+  --danger:#D96060;--danger-light:#FFF0F0;
+  --success:#3A7A54;--success-light:#DFF5E4;
+  --warn-light:#FFF8E6;--warn:#8A6000;
+  --mono:'SF Mono','Consolas','Courier New',monospace;
+}
+@media(prefers-color-scheme:dark){:root{
+  --text:#DDE4F0;--ground:#0F1825;--surface:#18263A;
+  --border:#1E3350;--slate:#8A95AD;--slate-dim:#2A3F5A;
+  --accent-light:#0E2035;
+  --danger:#E07878;--danger-light:#2A1A1A;
+  --success:#5DA87A;--success-light:#182A20;
+  --warn-light:#2A2200;--warn:#E0B840;
+}}
+:root[data-theme="dark"]{--text:#DDE4F0;--ground:#0F1825;--surface:#18263A;--border:#1E3350;--slate:#8A95AD;--slate-dim:#2A3F5A;--accent-light:#0E2035;--danger:#E07878;--danger-light:#2A1A1A;--success:#5DA87A;--success-light:#182A20;--warn-light:#2A2200;--warn:#E0B840}
+:root[data-theme="light"]{--text:#2E3A59;--ground:#E8F4FD;--surface:#FFFFFF;--border:#D0E4F5;--slate:#6B7894;--slate-dim:#B0BACC;--accent-light:#EEF6FC;--danger:#D96060;--danger-light:#FFF0F0;--success:#3A7A54;--success-light:#DFF5E4;--warn-light:#FFF8E6;--warn:#8A6000}
+
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,Roboto,sans-serif;background:var(--ground);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}
+
+.site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:17px;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.logo .sw{color:var(--accent)}
+nav a{font-size:14px;font-weight:500;color:var(--slate);text-decoration:none;transition:color .15s}
+nav a:hover{color:var(--accent)}
+
+main{flex:1;padding:40px 24px 80px;max-width:720px;margin:0 auto;width:100%}
+
+.back-link{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:500;color:var(--slate);text-decoration:none;margin-bottom:40px;transition:color .15s}
+.back-link:hover{color:var(--accent)}
+
+.page-tag{font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--slate-dim);margin-bottom:12px}
+h1{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.03em;text-wrap:balance;margin-bottom:10px}
+.intro{font-size:16px;color:var(--slate);margin-bottom:40px;max-width:560px}
+
+.section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
+.section-label{font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:12px}
+.section h2{font-size:17px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
+.section p{font-size:15px;color:var(--slate);margin-bottom:12px}
+.section p:last-child{margin-bottom:0}
+
+.steps{display:flex;flex-direction:column;gap:14px;margin-top:4px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body{flex:1;min-width:0}
+.step-body strong{display:block;font-size:15px;color:var(--text);margin-bottom:2px}
+.step-body span{font-size:14px;color:var(--slate)}
+
+.email-box{background:var(--accent-light);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.email-addr{font-size:15px;font-weight:600;color:var(--accent);word-break:break-all}
+.copy-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0;transition:opacity .15s}
+.copy-btn:hover{opacity:.85}
+
+.data-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+.data-table th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--slate-dim);padding:8px 0 10px;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 0;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.data-table td:first-child{font-weight:500;padding-right:16px;width:48%}
+.tag{display:inline-block;padding:3px 9px;border-radius:6px;font-size:12px;font-weight:600}
+.tag-deleted{background:var(--danger-light);color:var(--danger)}
+.tag-kept{background:var(--warn-light);color:var(--warn)}
+
+.notice{background:var(--success-light);border:1px solid var(--border);border-left:4px solid var(--success);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--text);margin-top:16px}
+
+.site-footer{border-top:1px solid var(--border);padding:24px}
+.footer-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer-brand{color:var(--slate);display:flex;align-items:center;gap:10px;font-size:13px}
+.footer-brand strong{font-weight:700;color:var(--text)}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:var(--slate);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/" class="logo">petran<span class="sw">SW</span></a>
+  <nav><a href="/supportbuddy/">SupportBuddy</a></nav>
+</header>
+
+<main>
+  <a href="/supportbuddy/" class="back-link">← SupportBuddy</a>
+
+  <p class="page-tag">// Account</p>
+  <h1>Delete My Account</h1>
+  <p class="intro">You can request deletion of your SupportBuddy account and all associated personal data at any time. We process all requests within 30 days.</p>
+
+  <div class="section">
+    <p class="section-label">// Option 1 — In the app</p>
+    <h2>Delete from the app</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Open SupportBuddy</strong>
+          <span>Launch the app on your device.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Go to Profile</strong>
+          <span>Tap the Profile card on the Home screen.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Tap "Delete Account"</strong>
+          <span>Scroll to the bottom of the Profile screen and tap Delete Account. Confirm when prompted — this action is permanent.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">// Option 2 — Email request</p>
+    <h2>Send us a deletion request</h2>
+    <p>Email us from the address linked to your account with the subject line <strong>"Delete Account"</strong>.</p>
+    <div class="email-box">
+      <span class="email-addr">petrosalex66@gmail.com</span>
+      <button class="copy-btn" onclick="copyEmail(this)">Copy</button>
+    </div>
+    <div class="notice">
+      We'll confirm your deletion via email within 30 days. If you no longer have access to your registered email, include your in-app display name so we can locate your account.
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">// What gets deleted</p>
+    <h2>Data we delete and retain</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data type</th>
+          <th>Action</th>
+          <th>Retention</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Account credentials (email, password hash)</td>
+          <td><span class="tag tag-deleted">Deleted</span></td>
+          <td>Immediately</td>
+        </tr>
+        <tr>
+          <td>Profile (name, age group, voice settings)</td>
+          <td><span class="tag tag-deleted">Deleted</span></td>
+          <td>Within 30 days</td>
+        </tr>
+        <tr>
+          <td>Conversation history with AI</td>
+          <td><span class="tag tag-deleted">Deleted</span></td>
+          <td>Within 30 days</td>
+        </tr>
+        <tr>
+          <td>Schedule items and task data</td>
+          <td><span class="tag tag-deleted">Deleted</span></td>
+          <td>Within 30 days</td>
+        </tr>
+        <tr>
+          <td>Mood check-ins and tracking logs</td>
+          <td><span class="tag tag-deleted">Deleted</span></td>
+          <td>Within 30 days</td>
+        </tr>
+        <tr>
+          <td>Communication cards</td>
+          <td><span class="tag tag-deleted">Deleted</span></td>
+          <td>Within 30 days</td>
+        </tr>
+        <tr>
+          <td>Subscription purchase records</td>
+          <td><span class="tag tag-kept">Kept</span></td>
+          <td>7 years (legal obligation)</td>
+        </tr>
+        <tr>
+          <td>Anonymised analytics (no personal identifiers)</td>
+          <td><span class="tag tag-kept">Kept</span></td>
+          <td>Aggregated, never linked to you</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <strong>Petran SW</strong>
+      <span>© 2026. All rights reserved.</span>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy/supportbuddy/">Privacy Policy</a>
+      <a href="/supportbuddy/">SupportBuddy</a>
+      <a href="/">Home</a>
+      <a href="mailto:petrosalex66@gmail.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function copyEmail(btn) {
+    navigator.clipboard.writeText('petrosalex66@gmail.com').then(() => {
+      var orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(function(){ btn.textContent = orig; }, 2000);
+    }).catch(function() {
+      btn.textContent = 'Copy failed';
+      setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
