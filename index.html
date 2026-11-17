@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Petran SW — AI-Powered Mobile Apps</title>
-<meta name="description" content="Petran SW builds AI-powered mobile apps. Download SportTips AI, CricAI, and Eras Daily on iOS and Android.">
+<meta name="description" content="Petran SW builds AI-powered mobile apps. Download SportTips AI, CricAI, Fanverse Daily and SupportBuddy on iOS and Android.">
 <link rel="canonical" href="https://petransw.com/">
 <meta property="og:title" content="Petran SW — AI-Powered Mobile Apps">
 <meta property="og:description" content="Football predictions, cricket analytics, and more. Available on iOS &amp; Android.">
@@ -136,7 +136,8 @@ main{flex:1}
 /* Per-app accent on hover */
 .app-card[data-app="sporttips"]:hover{border-color:#4ADE80;box-shadow:0 4px 24px rgba(74,222,128,.12)}
 .app-card[data-app="cricai"]:hover{border-color:#38BDF8;box-shadow:0 4px 24px rgba(56,189,248,.12)}
-.app-card[data-app="erasdaily"]:hover{border-color:#F472B6;box-shadow:0 4px 24px rgba(244,114,182,.12)}
+.app-card[data-app="fanversedaily"]:hover{border-color:#F472B6;box-shadow:0 4px 24px rgba(244,114,182,.12)}
+.app-card[data-app="teamverse"]:hover{border-color:#FB923C;box-shadow:0 4px 24px rgba(251,146,60,.12)}
 .app-card[data-app="supportbuddy"]:hover{border-color:#7BAFD4;box-shadow:0 4px 24px rgba(123,175,212,.14)}
 
 .card-arrow{
@@ -147,9 +148,17 @@ main{flex:1}
 .app-card:hover .card-arrow{transform:translateX(3px);color:var(--teal)}
 .app-card[data-app="sporttips"]:hover .card-arrow{color:#4ADE80}
 .app-card[data-app="cricai"]:hover .card-arrow{color:#38BDF8}
-.app-card[data-app="erasdaily"]:hover .card-arrow{color:#F472B6}
+.app-card[data-app="fanversedaily"]:hover .card-arrow{color:#F472B6}
+.app-card[data-app="teamverse"]:hover .card-arrow{color:#FB923C}
 .app-card[data-app="supportbuddy"]:hover .card-arrow{color:#7BAFD4}
 
+.soon-badge{
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  padding:2px 7px;border-radius:20px;
+  background:rgba(251,146,60,.1);color:#FB923C;
+  letter-spacing:.03em;vertical-align:middle;margin-left:6px;
+  border:1px solid rgba(251,146,60,.2);
+}
 .site-footer{border-top:1px solid var(--border);padding:24px;font-size:13px}
 .footer-inner{
   max-width:860px;margin:0 auto;
@@ -170,7 +179,7 @@ main{flex:1}
   <nav>
     <a href="/sporttips/">SportTips AI</a>
     <a href="/cricai/">CricAI</a>
-    <a href="/erasdaily/">Eras Daily</a>
+    <a href="/fanversedaily/">Fanverse Daily</a>
     <a href="/supportbuddy/">SupportBuddy</a>
   </nav>
 </header>
@@ -179,7 +188,7 @@ main{flex:1}
   <section class="hero">
     <p class="eyebrow">petran_sw.init()</p>
     <h1>AI-powered apps<br>for everyone.</h1>
-    <p>Football predictions, cricket analytics, and daily eras content — built for people who are passionate about what they love.</p>
+    <p>Football predictions, cricket analytics, music fandom apps and more — built for people who are passionate about what they love.</p>
   </section>
 
   <div class="section-inner">
@@ -212,12 +221,26 @@ main{flex:1}
         <div class="card-arrow">›</div>
       </a>
 
-      <a href="/erasdaily/" class="app-card" data-app="erasdaily">
-        <div class="card-icon">✨</div>
+      <a href="/fanversedaily/" class="app-card" data-app="fanversedaily">
+        <div class="card-icon">🎵</div>
         <div class="card-body">
-          <div class="card-name">Eras Daily</div>
-          <div class="card-desc">Your daily companion through every era — setlists, collectible moments, and everything a Swiftie needs.</div>
+          <div class="card-name">Fanverse Daily</div>
+          <div class="card-desc">Follow your favourite music artists — latest clips, news &amp; albums from Spotify. Free up to 1 artist, Premium up to 10.</div>
           <div class="card-links">
+            <span class="badge">iOS</span>
+            <span class="badge">Android</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a href="/teamverse/" class="app-card" data-app="teamverse">
+        <div class="card-icon">🏟️</div>
+        <div class="card-body">
+          <div class="card-name">TeamVerse <span class="soon-badge">Soon</span></div>
+          <div class="card-desc">Follow your football clubs — results, news, lineups and fan content across every league. The Fanverse experience for football.</div>
+          <div class="card-links">
+            <span class="badge">iOS</span>
             <span class="badge">Android</span>
           </div>
         </div>
